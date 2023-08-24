@@ -4,11 +4,12 @@ import './Button.css'
 interface ButtonProps {
   children: React.ReactNode | string | number | null;
   isEqual?: boolean | null | any;
+  onClick?: void | any;
 }
 
-function Button({children, isEqual = false}: ButtonProps) {
+function Button({onClick, children, isEqual = false}: ButtonProps) {
   return (
-    <div className={isEqual ? 'button equal' : 'button'}>
+    <div onClick={() => onClick()} className={isEqual ? 'button equal' : 'button'}>
       {children}
     </div>
   )
