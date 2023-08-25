@@ -4,10 +4,11 @@ import { math } from '../../utils/Math'
 export const Values = createSlice({
   name: 'values',
   initialState: {
-    first: '1',
-    second: '2',
-    sign: '+',
-    wasChanged: false
+    first: '0',
+    second: '0',
+    sign: '',
+    wasChanged: false,
+    prevSign: '',
   },
   reducers: {
     setFirst: (state, action)  => {
@@ -26,29 +27,40 @@ export const Values = createSlice({
       else
         state.second = state.second + action.payload
     },
-    setSign: (state, action) => {
-      state.sign = String(action.payload)
-      state.wasChanged = true
-    },
     clearSecond: state => {
       state.second = '0'
+      state.wasChanged = false
     },
     clearAll: state => {
       state.first = '0';
       state.second = '0';
       state.sign = '';
     },
-    addition: state => {
-      state.first = String(math.addition(Number(state.first), Number(state.second)))
-      state.second = '0'
-    },
     changeNumberSign: state => {
       state.second = String(math.changeSign(Number(state.second)))
-    }
+    },
+    changeSign: (state, action) => {
+      state.prevSign = state.sign
+      state.sign = action.payload
+      if (state.prevSign === '') {
+        state.first = String(Number(state.second))
+        state.second = '0'
+        state.wasChanged = true
+        return
+      }
+      if (state.wasChanged) return
+      state.first = math.doMath(state.prevSign, state.first, state.second)
+      state.wasChanged = true
+    },
+    equalHandler: state => {
+      console.log(state.sign);
+      state.first = math.doMath(state.sign, state.first, state.second)
+      state.wasChanged = true
+    },
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { addition, setFirst, setSecond, clearSecond, clearAll, changeNumberSign } = Values.actions
+export const { equalHandler, changeSign, setFirst, setSecond, clearSecond, clearAll, changeNumberSign } = Values.actions
 
 export default Values.reducer

@@ -39,6 +39,24 @@ class MyMath implements IMath {
   percent(a: number, percent: number) {
     return a*percent/100
   }
+
+  doMath(sign: string, first: string, second: string) {
+    switch (sign) {
+      case '+':
+        first = String(this.addition(Number(first),Number(second)))
+        break;
+      case '-':
+        first = String(this.subtraction(Number(first),Number(second)))
+        break;
+      case '*':
+        first = String(this.multiplication(Number(first),Number(second)))
+        break;
+      case '/':
+        first = String(this.division(Number(first),Number(second)))
+        break;
+    }
+    return first
+  }
 }
 
 export const math = new MyMath();

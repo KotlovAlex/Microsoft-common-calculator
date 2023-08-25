@@ -3,12 +3,12 @@ import './Display.css'
 import { useAppSelector } from '../../hooks/redux'
 
 function Display() {
-  const {first, second, sign} = useAppSelector(state => state.values)
+  const {first, second, sign, wasChanged} = useAppSelector(state => state.values)
 
   return (
     <div className='display'>
       <div className='history'>{sign === '' ? '' : `${first} ${sign}`}</div>
-      <div className='main'>{second}</div>
+      <div className='main'>{wasChanged ? first : second}</div>
     </div>
   )
 }
