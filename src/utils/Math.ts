@@ -12,47 +12,47 @@ interface IMath {
 
 class MyMath implements IMath {
   addition(a: number, b: number) {
-    return a + b
+    return Number((a + b).toFixed(10))
   }
   subtraction(a: number, b: number) {
-    return a - b
+    return Number((a - b).toFixed(10))
   }
   division(a: number, b: number) {
-    return a / b
+    return Number((a / b).toFixed(10))
   }
   multiplication(a: number, b: number) {
-    return a * b
+    return Number((a * b).toFixed(10))
   }
   sqr(a: number) {
-    return a * a
+    return Number((a * a).toFixed(10))
   }
   sqrt(a: number) {
-    return Math.sqrt(a)
+    return Number(Math.sqrt(a).toFixed(10))
   }
   oneDivToNumber(a: number) {
-    return 1/a
+    return Number((1/a).toFixed(10))
   }
   changeSign(a: number) {
     if (a === 0) return a
-    return -1 * a
+    return Number((-1 * a).toFixed(10))
   }
   percent(a: number, percent: number) {
-    return a*percent/100
+    return Number((a*percent/100).toFixed(10))
   }
 
   doMath(sign: string, first: string, second: string) {
     switch (sign) {
       case '+':
-        first = String(this.addition(Number(first),Number(second)))
+        first = String(this.addition(Number(first),Number(second)).toFixed(10))
         break;
       case '-':
-        first = String(this.subtraction(Number(first),Number(second)))
+        first = String(this.subtraction(Number(first),Number(second)).toFixed(10))
         break;
       case '*':
-        first = String(this.multiplication(Number(first),Number(second)))
+        first = String(this.multiplication(Number(first),Number(second)).toFixed(10))
         break;
       case '/':
-        first = String(this.division(Number(first),Number(second)))
+        first = String(this.division(Number(first),Number(second)).toFixed(10))
         break;
     }
     return first

@@ -11,7 +11,7 @@ export const Values = createSlice({
     prevSign: '',
   },
   reducers: {
-    setFirst: (state, action)  => {
+    setFirst: (state, action?)  => {
       if (state.first === '0') 
         state.first = String(action.payload)
       else
@@ -20,12 +20,17 @@ export const Values = createSlice({
     
     setSecond: (state, action)  => {
       if (action.payload === '.' && state.second.includes('.')) return
-      if (state.second === '0' || state.wasChanged) { 
+      if (state.second === '0' || state.wasChanged) {
+        if (action.payload === '.') {
+          state.second = state.second + action.payload
+          return
+        }
         state.second = String(action.payload)
         state.wasChanged = false
-      }
-      else
+      }else{
         state.second = state.second + action.payload
+        
+      }
     },
     clearSecond: state => {
       state.second = '0'
@@ -35,6 +40,14 @@ export const Values = createSlice({
       state.first = '0';
       state.second = '0';
       state.sign = '';
+    },
+    backspace: state => {
+      if (state.wasChanged || state.second === '0') return
+      if (state.second.length === 1) {
+        state.second = '0'
+        return
+      }
+      state.second = state.second.slice(0,state.second.length-1)
     },
     changeNumberSign: state => {
       state.second = String(math.changeSign(Number(state.second)))
@@ -53,14 +66,35 @@ export const Values = createSlice({
       state.wasChanged = true
     },
     equalHandler: state => {
-      console.log(state.sign);
+      if (state.sign === '') state.first = state.second
       state.first = math.doMath(state.sign, state.first, state.second)
       state.wasChanged = true
     },
+    oneDivToNumber: state => {
+      if (state.wasChanged) 
+        state.first = String(math.oneDivToNumber(Number(state.first)))
+      else 
+        state.second = String(math.oneDivToNumber(Number(state.second)))
+    },
+    sqr: state => {
+      if (state.wasChanged) 
+        state.first = String(math.sqr(Number(state.first)))
+      else 
+        state.second = String(math.sqr(Number(state.second)))
+    },
+    sqrt: state => {
+      if (state.wasChanged) 
+        state.first = String(math.sqrt(Number(state.first)))
+      else 
+        state.second = String(math.sqrt(Number(state.second)))
+    },
+    percent: state => {
+      state.second = String(math.percent(Number(state.first), Number(state.second)))
+    }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { equalHandler, changeSign, setFirst, setSecond, clearSecond, clearAll, changeNumberSign } = Values.actions
+export const { percent, sqrt, sqr, oneDivToNumber, backspace, equalHandler, changeSign, setFirst, setSecond, clearSecond, clearAll, changeNumberSign } = Values.actions
 
 export default Values.reducer
