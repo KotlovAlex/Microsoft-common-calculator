@@ -1,4 +1,5 @@
 interface IMath {
+  numOfSignAfrerPoint(a: string):number;
   addition(a: number, b: number): number;
   subtraction(a: number, b: number): number;
   division(a: number, b: number): number;
@@ -11,48 +12,63 @@ interface IMath {
 }
 
 class MyMath implements IMath {
+  numOfSignAfrerPoint(a: string) {
+    return ~(a + '').indexOf('.') ? (a + '').split('.')[1].length : 0;
+  }
+  fixedValue(a: number) {
+    return Number(a.toFixed(Math.min(this.numOfSignAfrerPoint(String(a)),10)))
+  }
   addition(a: number, b: number) {
-    return Number((a + b).toFixed(10))
+    const res = a + b
+    console.log(this.numOfSignAfrerPoint(String(res)));
+    return this.fixedValue(res)
   }
   subtraction(a: number, b: number) {
-    return Number((a - b).toFixed(10))
+    const res = a - b
+    return this.fixedValue(res)
   }
   division(a: number, b: number) {
-    return Number((a / b).toFixed(10))
+    const res = a / b
+    return this.fixedValue(res)
   }
   multiplication(a: number, b: number) {
-    return Number((a * b).toFixed(10))
+    const res = a * b
+    return this.fixedValue(res)
   }
   sqr(a: number) {
-    return Number((a * a).toFixed(10))
+    const res = a * a
+    return this.fixedValue(res)
   }
   sqrt(a: number) {
-    return Number(Math.sqrt(a).toFixed(10))
+    const res = Math.sqrt(a)
+    return this.fixedValue(res)
   }
   oneDivToNumber(a: number) {
-    return Number((1/a).toFixed(10))
+    const res = 1 / a
+    return this.fixedValue(res)
   }
   changeSign(a: number) {
     if (a === 0) return a
-    return Number((-1 * a).toFixed(10))
+    return (-1 * a)
   }
   percent(a: number, percent: number) {
-    return Number((a*percent/100).toFixed(10))
+    const res = a*percent/100
+    return this.fixedValue(res)
   }
 
   doMath(sign: string, first: string, second: string) {
     switch (sign) {
       case '+':
-        first = String(this.addition(Number(first),Number(second)).toFixed(10))
+        first = String(this.addition(Number(first),Number(second)))
         break;
       case '-':
-        first = String(this.subtraction(Number(first),Number(second)).toFixed(10))
+        first = String(this.subtraction(Number(first),Number(second)))
         break;
       case '*':
-        first = String(this.multiplication(Number(first),Number(second)).toFixed(10))
+        first = String(this.multiplication(Number(first),Number(second)))
         break;
       case '/':
-        first = String(this.division(Number(first),Number(second)).toFixed(10))
+        first = String(this.division(Number(first),Number(second)))
         break;
     }
     return first
