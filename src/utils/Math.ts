@@ -20,7 +20,6 @@ class MyMath implements IMath {
   }
   addition(a: number, b: number) {
     const res = a + b
-    console.log(this.numOfSignAfrerPoint(String(res)));
     return this.fixedValue(res)
   }
   subtraction(a: number, b: number) {
